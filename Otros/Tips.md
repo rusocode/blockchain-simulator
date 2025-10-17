@@ -1,50 +1,38 @@
 - Usar la wallet de phantom para la red de Solana y Bitcoin
-- bc1qnphc9ye7pgn7dhk8t6rzw8j6perxx3wjn440zp esto es una clave publica de una wallet
-- Existen las wallets frias y calientes, las frias son mas seguras ya que almacenan los activos en un hardware y la
-  wallet caliente
-  utiliza la frase semilla de 12 palabras para proteger las criptomodes o cualquier otro bien
+- bc1qnphc9ye7pgn7dhk8t6rzw8j6perxx3wjn440zp esto es una clave publica (direccion) de una wallet
 - USDC es mas preferida en DeFi pero con menos capitalizacion que USDT y menos pares de monedas, pero tiene una mejor
   transparencia
 
 Depositar como colateral: Bloquear temporalmente tus criptos en un contrato inteligente como garantia, para que te
-presten
-otras criptos. Mientras esten bloqueadas, no puedes usarlas, pero siguen siendo tuyas. Cuando devuelves el prestamo, las
-recuperas.
+presten otras criptos. Mientras esten bloqueadas, no puedes usarlas, pero siguen siendo tuyas. Cuando devuelves el
+prestamo, las recuperas.
 
 los hash TxID al hacer withdraw desde binance a una wallet externa son parecidos a por ejemplo "
 0x2decc7c93bb7ecd34d8eb9e3c5f72bd9681c8b3b174bc7a62bd2a41244f0b6db" (on-chain) y los "311171437274" es el identificador
 interno de Binance para transferencias off-chain, estas son instantáneas, sin fees de red y no visibles en exploradores
 de blockchain.
 
-
 ----------------
 
-Infor extraida de: https://youtu.be/EA7VjSNqoVs?si=14SBWNsp5dsjumck
+Infor extraida de https://youtu.be/EA7VjSNqoVs?si=14SBWNsp5dsjumck
 
-comprar cada viernes o cada domingo en binance
-
-el finde de semana hay mas volatilidad
-
-“si cada viernes tu tienes una compra progresiva y vas añadiendo a tu posicion, es probablemente la mejor forma de
-inversion”
-
-si compras a mercado, compras al primero que te vende y la comisión es un poco mas alta. si compras a través de una
-orden pagas menos comision y recomendable
-
-grok es muy bueno para averiguar sobre criptos
-
-si la ia te dice compra a 100 entonces compra a 103 por que si no toca no quieres quedarte fuera
-
+- Comprar cada viernes o cada domingo en binance.
+- El finde de semana hay mas volatilidad.
+- Si cada viernes haces una compra progresiva y vas añadiendo a tu posicion, es probablemente la mejor forma de
+  inversion.
+- Si compras a mercado, compras al primero que te vende y la comision es un poco mas alta. Si compras a traves de una
+  orden pagas menos comision y es mas recomendable.
+- Grok es muy bueno para averiguar sobre cryptos.
+- Si la AI te dice compra a 100 entonces compra a 103 por que si no toca no quieres quedarte fuera.
 
 ---------------
 
-rabby tips:
+Rabby tips:
 
-usar la red de arbitrum
-
-para enviar dinero a la wallet primero hay que elgir la red (arbitrum) y la direccion, tambien pasar un gas ademas de
-los usdt que voy a mandar , el gas de arbitrum-base se paga en eth (no es cara, la red de arbitrum es barata) primero
-retirar el gas (eth)
+- Usar la red de Arbitrum.
+- Para enviar dinero a la wallet primero hay que elgir la red (Arbitrum) y la direccion, tambien pasar un gas ademas de
+  los USDT que voy a mandar , el gas de arbitrum-base se paga en eth (no es cara, la red de arbitrum es barata) primero
+  retirar el gas (eth)
 
 apartir de la semilla que da rabby se pueden crear varias direcciones hasta 50
 
