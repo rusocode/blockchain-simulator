@@ -1,6 +1,11 @@
 package org.blockchain;
 
-// TODO Ver codigo fuente de Bitcoin en C
+/**
+ * Este proyecto <b>NO simula el funcionamiento completo de una blockchain real</b>, sino que es una <b>implementacion educativa
+ * simplificada</b> que captura solo algunos conceptos fundamentales.
+ * <p>
+ * TODO Ver codigo fuente de Bitcoin en C
+ */
 
 public class Launcher {
 

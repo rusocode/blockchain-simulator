@@ -47,7 +47,7 @@ import java.security.MessageDigest;
  * </ul>
  * </ol>
  * El <b>nonce</b> es un numero al azar que se añade a los datos antes del hashing. Pero como esta es una implementacion educativa,
- * <b>se hace un incremento secuencial del nonce y no aleatorio para simplificar el objetivo educativo.Los nonces aleatorios son
+ * <b>se hace un incremento secuencial del nonce y no aleatorio para simplificar el objetivo educativo. Los nonces aleatorios son
  * importantes cuando multiples mineros compiten simultaneamente (evita que todos prueben los mismos valores en el mismo orden).</b>
  * El nonce es algo de lo que ya se explicaba en 2013 en pocos sitios de internet <a href="https://www.oroyfinanzas.com/2013/05/infografia-transacciones-bitcoin/">Infografia sobre las transacciones con Bitcoin</a>
  * <h3>¿Por que existe esto?</h3>

@@ -3,10 +3,6 @@ package org.blockchain;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- * Este proyecto <b>NO simula el funcionamiento completo de una blockchain real</b>, sino que es una <b>implementacion educativa
- * simplificada</b> que captura solo algunos conceptos fundamentales.
- */
 
 public class Blockchain {
 
@@ -71,8 +67,7 @@ public class Blockchain {
     /**
      * Imprime en consola la blockchain, es decir, cada uno de los bloques mostrando la informacion almacenada en cada uno. Con
      * informacion me refiero al indice del bloque, la fecha de creacion del bloque (timestamp), la transaccion realizada como por
-     * ejemplo "Alice -> Bob: 10 BTC" (los datos del bloque), el hash previo, el hash actual
-     *
+     * ejemplo "Alice -> Bob: 10 BTC" (los datos del bloque), el hash previo, el hash actual y el nonce.
      */
     public void print() {
         System.out.println("\n[Blockchain]");
