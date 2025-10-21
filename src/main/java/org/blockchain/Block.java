@@ -4,7 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 
 /**
- * <h2>¿Por que SHA-256?</h2>
+ * <h2>Algoritmo SHA-256</h2>
  * SHA-256 posee propiedades criptograficas fundamentales que lo hacen ideal para blockchain. En primer lugar, es determinista, lo
  * que significa que el mismo input siempre producira el mismo hash de manera consistente. Ademas, es computacionalmente rapido de
  * calcular, permitiendo procesar grandes cantidades de datos de forma eficiente. Una caracteristica crucial es el efecto
@@ -40,12 +40,16 @@ import java.security.MessageDigest;
  * <li>Compara los primeros N caracteres del hash con el objetivo
  * <li>Si NO coinciden (por ejemplo, el hash empieza con {@code "a7"} en lugar de {@code "00"}):
  * <ul>
- *  <li>Incrementa el {@code nonce} (un contador)
+ *  <li>Incrementa el {@code nonce}
  *  <li>Recalcula el hash completo
  *  <li>Vuelve a verificar
  * </ul>
  * </ul>
  * </ol>
+ * El <b>nonce</b> es un numero al azar que se añade a los datos antes del hashing. Pero como esta es una implementacion educativa,
+ * <b>se hace un incremento secuencial del nonce y no aleatorio para simplificar el objetivo educativo.Los nonces aleatorios son
+ * importantes cuando multiples mineros compiten simultaneamente (evita que todos prueben los mismos valores en el mismo orden).</b>
+ * El nonce es algo de lo que ya se explicaba en 2013 en pocos sitios de internet <a href="https://www.oroyfinanzas.com/2013/05/infografia-transacciones-bitcoin/">Infografia sobre las transacciones con Bitcoin</a>
  * <h3>¿Por que existe esto?</h3>
  * Imagina que quieres modificar un bloque antiguo para robar Bitcoins:
  * <ol>
@@ -100,18 +104,58 @@ public class Block {
         this.hash = calculateHash();
     }
 
+    /**
+     * La linea {@code String target = new String(new char[difficulty]).replace('\0', '0');} reemplaza todos los caracteres nulos
+     * (si difficulty = 2, crea: ['\0', '\0']) con el caracter '0'. Este string de ceros define la dificultad del <b>Proof of
+     * Work</b>. El algoritmo de minado buscara un hash que <b>comience</b> con esa cantidad de ceros.
+     * <p>
+     * El impacto de la seguridad depende de la dificultad. Una dificultad de 2 significa que el hash debe empezar con 2 ceros
+     * ("00") lo que requiere <b>~256 intentos en promedio</b> (aunque puede variar: algunos bloques necesitaran menos y otros
+     * mas). Una dificultad de 3 requiere ~4,096 intentos en promedio. Una dificultad de 19 (como en Bitcoin) requiere billones de
+     * intentos (~10 minutos aproximadamente con todo el poder computacional de la red).
+     * <p>
+     * El bucle es el corazon del Proof of Work ya que <b>busca activamente</b> un hash valido obligando al sistema a
+     * <b>probar</b> miles o millones de valores de {@code nonce}, <b>recalcular</b> el hash en cada iteracion, <b>verificar</b>
+     * si cumple con la dificultad y <b>repetir</b> hasta encontrar un hash valido. Este proceso de minado (busqueda activa) es
+     * computacionalmente costoso, mientras que verificar un bloque ya minado es instantaneo. Esta asimetria es lo que hace que
+     * modificar la blockchain sea computacionalmente costoso e impractico.
+     */
+    public void mineBlock(int difficulty) {
+        String target = new String(new char[difficulty]).replace('\0', '0');
+        // Mientras el hash NO cumpla con la dificultad requerida, continua buscando hasta que los primeros 2 caracteres del hash coincidan con "00"
+        while (!hash.substring(0, difficulty).equals(target)) {
+            nonce++;
+            hash = calculateHash();
+        }
+        System.out.println("Mined block: " + hash);
+    }
+
+    /**
+     * Calcula el hash del bloque.
+     *
+     * @return el hash del bloque que basicamente es una cadena de 64 caracteres hexadecimales
+     */
     public String calculateHash() {
         try {
             // 1. Concatena todos los datos del bloque
             String input = index + timestamp + data + previousHash + nonce;
             // 2. Obtiene una instancia del algoritmo SHA-256 (hash de 256 bits equivalente a 64 caracteres hexadecimales)
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            // 3. Aplica el hash a los datos convirtiendo primero los bytes a formato UTF-8 y luego aplicando el hash
+            // 3. Aplica el hash a los datos convirtiendo primero los bytes a formato UTF-8 y luego aplicando el hash SHA-256
             byte[] hashBytes = digest.digest(input.getBytes(StandardCharsets.UTF_8));
             // 4. Convierte los bytes a formato hexadecimal legible
             StringBuilder hexString = new StringBuilder();
             for (byte b : hashBytes) {
-                String hex = Integer.toHexString(0xff & b); // (0xff & b) asegura que se trate como numero sin signo
+                /* Esta linea convierte un byte en su representacion hexadecimal como string, pero utiliza la operacion 0xff & b
+                 * para resolver un problema especifico de Java. En Java, los bytes son con signo, lo que significa que tienen un
+                 * rango de -128 a 127, pero cuando queremos convertirlos a hexadecimal necesitamos tratarlos como valores sin signo
+                 * (0 a 255). El valor 0xff representa 255 en decimal o 11111111 en binario (8 bits todos en 1), y al aplicar el
+                 * operador AND bit a bit (&) con el byte, estamos "enmascarando" el valor para eliminar la extension de signo que
+                 * Java hace automaticamente. Sin esta mascara, un byte con valor -1 (que en binario es 11111111) se extenderia a 32
+                 * bits al convertirse a int, produciendo 0xffffffff en lugar del valor deseado 0xff. La mascara 0xff & b asegura que
+                 * siempre obtengamos un valor positivo entre 0 y 255, permitiendo que Integer.toHexString() genere la representacion
+                 * hexadecimal correcta de dos caracteres (o uno, que luego se completa con padding) para cada byte del hash. */
+                String hex = Integer.toHexString(0xff & b);
                 // Agrega un cero de relleno (padding) cuando un byte se convierte a hexadecimal y resulta en un solo caracter
                 if (hex.length() == 1) hexString.append('0');
                 hexString.append(hex);
@@ -120,29 +164,6 @@ public class Block {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * La linea {@code String target = new String(new char[difficulty]).replace('\0', '0');} reemplaza todos los caracteres nulos
-     * (si difficulty = 2, crea: ['\0', '\0']) con el caracter '0'. Este string de ceros define la dificultad del <b>Proof of
-     * Work</b>. El algoritmo de minado buscara un hash que <b>comience</b> con esa cantidad de ceros.
-     * <p>
-     * El impacto de la seguridad depende de la dificultad. Una dificultad de 2 significa que el hash debe empezar con 2 ceros
-     * ("00") lo que equivale a ~256 intentos. Una dificultad de 3 equivale a ~4,096 intentos. Una dificultad de 19 (por poner un
-     * ejemplo), como en Bitcoin, equivalen a billones de intentos (~10 minutos aproximadamente).
-     * <p>
-     * El bucle es el corazon del Proof of Work ya que obliga al sistema a <b>probar</b> miles o millones de valores de
-     * {@code nonce}, <b>recalcular</b> el hash en cada interacion, <b>verificar</b> si cumple con la dificultad y <b>repetir</b>
-     * hasta encontrar un hash valido. Es lo que hace que modificar la blockchain sea computacionalmente costoso e impractico.
-     */
-    public void mineBlock(int difficulty) {
-        String target = new String(new char[difficulty]).replace('\0', '0');
-        // Mientras el hash NO cumpla con la dificultad requerida, continua buscando (si los primeros 2 caracteres del hash son iguales a "00")
-        while (!hash.substring(0, difficulty).equals(target)) {
-            nonce++;
-            hash = calculateHash();
-        }
-        System.out.println("Mined block: " + hash);
     }
 
     public String getHash() {

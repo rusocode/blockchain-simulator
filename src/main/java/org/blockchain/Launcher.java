@@ -1,5 +1,7 @@
 package org.blockchain;
 
+// TODO Ver codigo fuente de Bitcoin en C
+
 public class Launcher {
 
     public static void main(String[] args) {
@@ -17,12 +19,14 @@ public class Launcher {
 
         blockchain.print();
 
-        System.out.println("Is chain valid? " + blockchain.isChainValid());
+        // Verifica si la blockchain es valida
+        System.out.println("Is chain valid? " + blockchain.isBlockchainValid());
 
+        // Genera un intento de manipulacion en la blockchain para luego verificar si la blockchain es valida, que obviamente no es asi
         System.out.println("\n=== ATTEMPTED MANIPULATION ===");
         System.out.println("Attempting to modify block 1...");
         blockchain.getBlock(1).setData("Alice -> Bob: 100 BTC (FRAUDE)");
-        System.out.println("Is the chain still valid? " + blockchain.isChainValid());
+        System.out.println("Is the chain still valid? " + blockchain.isBlockchainValid());
     }
 
 
