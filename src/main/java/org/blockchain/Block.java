@@ -14,7 +14,8 @@ import java.security.MessageDigest;
  * diferentes que produzcan el mismo hash, lo cual garantiza la unicidad e integridad de cada bloque en la cadena.
  * <p>
  * Ver: <a href="https://www.criptonoticias.com/criptopedia/que-es-funcion-hash-como-influye-bitcoin/">¿Que es una funcion hash y
- * como se usa en Bitcoin?</a>
+ * como se usa en Bitcoin?</a> <a
+ * href="https://academy.bit2me.com/wp-content/uploads/2019/10/Criptography_SHA_256_es.pdf/">Criptografia: Funcion SHA-256</a>
  * <h2>Metodo {@code mineBlock()}</h2>
  * Implementa el Proof of Work (Prueba de Trabajo), que es el mecanismo que hace costoso y seguro agregar bloques a la
  * blockchain.
@@ -140,9 +141,9 @@ public class Block {
             // 1. Concatena todos los datos del bloque
             String input = index + timestamp + data + previousHash + nonce;
             // 2. Obtiene una instancia del algoritmo SHA-256 (hash de 256 bits equivalente a 64 caracteres hexadecimales)
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            MessageDigest digest = MessageDigest.getInstance("SHA-256"); // TODO Como funciona internamente?
             // 3. Aplica el hash a los datos convirtiendo primero los bytes a formato UTF-8 y luego aplicando el hash SHA-256
-            byte[] hashBytes = digest.digest(input.getBytes(StandardCharsets.UTF_8));
+            byte[] hashBytes = digest.digest(input.getBytes(StandardCharsets.UTF_8)); // TODO Como funciona internamente?
             // 4. Convierte los bytes a formato hexadecimal legible
             StringBuilder hexString = new StringBuilder();
             for (byte b : hashBytes) {
