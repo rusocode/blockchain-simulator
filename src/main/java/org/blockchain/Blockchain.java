@@ -3,7 +3,6 @@ package org.blockchain;
 import java.util.ArrayList;
 import java.util.Date;
 
-
 public class Blockchain {
 
     /** Lista de objetos Block que representa a la blockchain. */

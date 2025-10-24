@@ -12,10 +12,6 @@ import java.security.MessageDigest;
  * Tambien es irreversible o unidireccional, lo que implica que es computacionalmente imposible obtener el input original a partir
  * del hash resultante. Finalmente, es resistente a colisiones, es decir, resulta practicamente imposible encontrar dos inputs
  * diferentes que produzcan el mismo hash, lo cual garantiza la unicidad e integridad de cada bloque en la cadena.
- * <p>
- * Ver: <a href="https://www.criptonoticias.com/criptopedia/que-es-funcion-hash-como-influye-bitcoin/">¿Que es una funcion hash y
- * como se usa en Bitcoin?</a> <a
- * href="https://academy.bit2me.com/wp-content/uploads/2019/10/Criptography_SHA_256_es.pdf/">Criptografia: Funcion SHA-256</a>
  * <h2>Metodo {@code mineBlock()}</h2>
  * Implementa el Proof of Work (Prueba de Trabajo), que es el mecanismo que hace costoso y seguro agregar bloques a la
  * blockchain.
@@ -85,6 +81,12 @@ import java.security.MessageDigest;
  * ceros se requieran al inicio del hash, mas grande se vuelve ese pajar hipotetico donde debemos buscar. En el sistema real de
  * Bitcoin, el minero o pool de mineros que encuentre primero el hash valido gana la recompensa del bloque, incentivando asi la
  * competencia y el mantenimiento de la red.
+ * <p>
+ * Links:
+ * <a href="https://www.criptonoticias.com/criptopedia/que-es-funcion-hash-como-influye-bitcoin/">¿Que es una funcion hash y como se usa en Bitcoin?</a>
+ * <a href="https://academy.bit2me.com/sha256-algoritmo-bitcoin/">¿Que es el algoritmo SHA‑256 y como funciona?</a>
+ * <a href="https://academy.bit2me.com/wp-content/uploads/2019/10/Criptography_SHA_256_es.pdf/">Criptografia: Funcion SHA-256</a>
+ * <a href="https://yukiteruamano.github.io/#!/">Simulador Blockchain</a>
  */
 
 public class Block {
